@@ -7,7 +7,9 @@
     "storage",
     "activeTab",
     "tabs",
-    "devtools"
+    "devtools",
+    "downloads",
+    "<all_urls>"
   ],
   "background": {
     "scripts": [
@@ -34,7 +36,7 @@
       "128": "assets/svelte.svg"
     }
   },
-"devtools_page": "index.html",
+  "devtools_page": "index.html",
   "icons": {
     "16": "assets/svelte.svg",
     "32": "assets/svelte.svg",

@@ -1,20 +1,22 @@
 <script>
   import { onMount } from "svelte";
 
-  import { init } from "./monaco";
+  import { initEditor, initLib } from "./monaco";
 
   let editor;
 
   // 初始化编辑器
   onMount(async () => {
-    const container = document.getElementById("monaco-editor")
-    editor = await init(container);
+    const container = document.getElementById("monaco-editor");
+    editor = await initEditor(container);
+
+    await initLib();
   });
 
   // 执行编辑器中的代码
   function runCode() {
     const code = editor.getValue();
-    browser.devtools.inspectedWindow.eval(code);
+    browser.devtools.inspectedWindow.eval(code); // 执行传递过来的代码
   }
 </script>
 

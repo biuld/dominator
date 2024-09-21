@@ -23,32 +23,39 @@ self.MonacoEnvironment = {
     },
 };
 
-// 动态加载 lib.dom.d.ts 文件
-async function loadDomDefinitions() {
-    // 从 public 目录加载 lib.dom.d.ts 文件
-    const response = await fetch("/lib.dom.d.ts");
+async function loadDefinitions(filepath) {
+    const response = await fetch(filepath);
 
     if (!response.ok) {
         throw new Error(`Failed to load lib.dom.d.ts: ${response.statusText}`);
     }
 
-    const libDomDefinitions = await response.text();
+    const libDefinitions = await response.text();
 
     // 将 lib.dom.d.ts 内容注入到 Monaco Editor 中
-    monaco.languages.typescript.javascriptDefaults.addExtraLib(
-        libDomDefinitions,
-        "lib.dom.d.ts",
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(
+        libDefinitions,
+        filepath,
     );
+
+    console.log(`${filepath} loaded`)
 }
 
-
-export async function init(container) {
-    await loadDomDefinitions();
-
+export async function initEditor(container) {
     return monaco.editor.create(container, {
-        value: "// Write your JavaScript here...\n",
-        language: "javascript",
+        value: "// Write your Javascript here...\n",
+        language: "typescript",
         theme: "vs-dark",
         automaticLayout: true, // 自动调整大小
     });
+}
+
+export async function initLib() {
+    await loadDefinitions("/lib.d.ts")
+
+    const resp = await fetch("/lib.js");
+    const lib = await resp.text();
+    browser.devtools.inspectedWindow.eval(lib);
+
+    console.log("lib.js loaded")
 }
