@@ -1,52 +1,53 @@
 <script>
   import { onMount } from "svelte";
+  import { Cell } from "./cell";
+  import { initLib } from "./monaco";
 
-  import { initEditor, initLib } from "./monaco";
+  let cell = new Cell();
 
-  let editor;
-
-  // 初始化编辑器
   onMount(async () => {
-    const container = document.getElementById("monaco-editor");
-    editor = await initEditor(container);
-
     await initLib();
-  });
 
-  // 执行编辑器中的代码
-  function runCode() {
-    const code = editor.getValue();
-    browser.devtools.inspectedWindow.eval(code); // 执行传递过来的代码
-  }
+    cell.initConsole()
+    cell.initEditor()
+  });
 </script>
 
-<div id="monaco-editor"></div>
-
-<!-- 浮动的运行按钮 -->
-<button class="run-button" on:click={runCode}>Run</button>
+<div class="cell">
+  <button id="runBtn" on:click={() => cell.run()}>RUN</button>
+  <div id="editor-container" bind:this={cell.editorContainer}></div>
+  <div id="console-container" bind:this={cell.consoleContainer}></div>
+</div>
 
 <style>
-  #monaco-editor {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+  .cell {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    flex-direction: row;
+    height: 100vh;
+    justify-content: flex-start;
+    background-color: #212121;
+    padding: 5%;
   }
-  .run-button {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    padding: 10px 20px;
-    background-color: #007acc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    z-index: 1000; /* 确保按钮位于最前面 */
+
+  #runBtn {
+    width: 6rem;
+    height: 1.5rem;
+    margin-right: 1rem;
   }
-  .run-button:hover {
-    background-color: #005f99;
+
+  #editor-container {
+    border: solid 1px #ccc;
+    box-sizing: border-box;
+    width: 50%;
+    margin-right: 1rem;
+  }
+
+  #console-container {
+    border: solid 1px #ccc;
+    box-sizing: border-box;
+    width: 40%;
   }
 </style>

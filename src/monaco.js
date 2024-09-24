@@ -41,12 +41,24 @@ async function loadDefinitions(filepath) {
     console.log(`${filepath} loaded`)
 }
 
-export async function initEditor(container) {
+export function initEditor(container) {
     return monaco.editor.create(container, {
         value: "// Write your Javascript here...\n",
         language: "typescript",
         theme: "vs-dark",
         automaticLayout: true, // 自动调整大小
+        minimap: {
+            enabled: false
+        },
+    });
+}
+
+export function initConsole(container) {
+    return monaco.editor.create(container, {
+        language: "json",
+        theme: "vs-dark",
+        automaticLayout: true, // 自动调整大小
+        readOnly: true, // 设置为不可编辑
     });
 }
 
