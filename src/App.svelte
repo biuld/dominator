@@ -33,8 +33,8 @@
   }
 
   #runBtn {
-    width: 6rem;
-    height: 1.5rem;
+    width: 100px;
+    height: 30px;
     margin-right: 1rem;
   }
 
