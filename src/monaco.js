@@ -53,7 +53,7 @@ export function initEditor(container) {
     });
 }
 
-export function initConsole(container) {
+export function initOutput(container) {
     return monaco.editor.create(container, {
         language: "json",
         theme: "vs-dark",

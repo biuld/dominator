@@ -8,7 +8,7 @@
   onMount(async () => {
     await initLib();
 
-    cell.initConsole()
+    cell.initOutput()
     cell.initEditor()
   });
 </script>

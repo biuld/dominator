@@ -1,5 +1,4 @@
 
-const eventBus = document.getElementById("EVENT_BUS")
 
 const dominator = {
     downloadFile(url, filename) {
@@ -9,5 +8,10 @@ const dominator = {
             url: url,
             filename: filename
         }, '*'); // '*' 表示接收来自任何源的消息
+    },
+
+    selectAttrAll(path, attr) {
+        return [...document.querySelectorAll(path)]
+            .map(e => e.getAttribute(attr))
     }
 }

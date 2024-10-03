@@ -1,6 +1,5 @@
 
-import { initEditor, initConsole } from "./monaco";
-
+import { initEditor, initOutput } from "./monaco";
 
 
 // 定义 Cell 类
@@ -15,9 +14,9 @@ export class Cell {
     async run() {
         try {
             let res = await browser.devtools.inspectedWindow.eval(this.code)
-            this.console.setValue(JSON.stringify(res, null, 2));
+            this.output.setValue(JSON.stringify(res, null, 2));
         } catch (error) {
-            this.console.setValue(`Error: ${error.message}`);
+            this.output.setValue(`Error: ${error.message}`);
         }
     }
 
@@ -31,7 +30,7 @@ export class Cell {
         });
     }
 
-    initConsole() {
-        this.console = initConsole(this.consoleContainer)
+    initOutput() {
+        this.output = initOutput(this.consoleContainer)
     }
 }
